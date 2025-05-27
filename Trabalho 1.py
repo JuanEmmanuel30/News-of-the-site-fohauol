@@ -71,7 +71,7 @@ SEED = 123
 df['date'] = pd.to_datetime(df.date)
 # Create a dataframe named news_2016
 
-# news_2016 = df['data'] = pd.to_datetime(df['data'])
+
 news_2016 = df[(df['data'].dt.year == 2016) & (df['categoria'] == 'mercado')]
 
 print(news_2016.shape)
@@ -106,7 +106,27 @@ def tokenize(text: str) -> List[str]:
 import spacy
 from tqdm import tqdm
 tqdm.pandas()
-news_2016['spacy_doc'] = news_2016['text'].progress_map(nlp)
+news_2016['spacy_doc'] = news_2016['Mensagem'].progress_map(nlp)
+
+import spacy
+from tqdm import tqdm
+tqdm.pandas()
+news_2016['spacy_doc'] = news_2016['Mensagem'].progress_map(nlp)
+
+import spacy
+from tqdm import tqdm
+tqdm.pandas()
+news_2016['spacy_doc'] = news_2016['Mensagem'].progress_map(nlp)
+
+import spacy
+from tqdm import tqdm
+tqdm.pandas()
+news_2016['spacy_doc'] = news_2016['Mensagem'].progress_map(nlp)
+
+import spacy
+from tqdm import tqdm
+tqdm.pandas()
+news_2016['spacy_doc'] = news_2016['Mensagem'].progress_map(nlp)
 
 import spacy
 from tqdm import tqdm
@@ -116,43 +136,23 @@ news_2016['spacy_doc'] = news_2016['text'].progress_map(nlp)
 import spacy
 from tqdm import tqdm
 tqdm.pandas()
-news_2016['spacy_doc'] = news_2016['text'].progress_map(nlp)
+news_2016['spacy_doc'] = news_2016['Mensagem'].progress_map(nlp)
 
 import spacy
 from tqdm import tqdm
 tqdm.pandas()
-news_2016['spacy_doc'] = news_2016['text'].progress_map(nlp)
+news_2016['spacy_doc'] = news_2016['Mensagem'].progress_map(nlp)
 
 import spacy
 from tqdm import tqdm
 tqdm.pandas()
-news_2016['spacy_doc'] = news_2016['text'].progress_map(nlp)
-
-import spacy
-from tqdm import tqdm
-tqdm.pandas()
-news_2016['spacy_doc'] = news_2016['text'].progress_map(nlp)
-
-import spacy
-from tqdm import tqdm
-tqdm.pandas()
-news_2016['spacy_doc'] = news_2016['text'].progress_map(nlp)
-
-import spacy
-from tqdm import tqdm
-tqdm.pandas()
-news_2016['spacy_doc'] = news_2016['text'].progress_map(nlp)
-
-import spacy
-from tqdm import tqdm
-tqdm.pandas()
-news_2016['spacy_doc'] = news_2016['text'].progress_map(nlp)
+news_2016['spacy_doc'] = news_2016['Mensagem'].progress_map(nlp)
 
 # Carregue o modelo grande de português
 nlp = spacy.load("pt_core_news_lg")
 
 # Aplique o modelo em cada texto e crie a coluna 'spacy_doc'
-news_2016['spacy_doc'] = news_2016['text'].map(nlp)
+news_2016['spacy_doc'] = news_2016['Mensagem'].map(nlp)
 
 # Realize a Lematização usando SPACY
 
@@ -173,7 +173,7 @@ def lemmatize(text):
     return [token.lemma_.lower() for token in doc if filter(token)]
 
 # Crie a coluna 'spacy_lemma' aplicando a função acima
-news_2016['spacy_lemma'] = news_2016['texto'].apply(lemmatize)
+news_2016['spacy_lemma'] = news_2016['Mensagem'].apply(lemmatize)
 
 def stopwords() -> Set[str]:
     """
@@ -188,10 +188,10 @@ def filter(w) -> bool:
     Filter stopwords and undesired tokens
     """
     return (
-        w.is_alpha and                # Apenas tokens alfabéticos
-        not w.is_punct and            # Não pontuação
-        not w.is_space and            # Não espaços
-        w.lemma_.lower() not in complete_stopwords # Não stopwords
+        w.is_alpha and                
+        not w.is_punct and            
+        not w.is_space and            
+        w.lemma_.lower() not in complete_stopwords 
     )
 
 def lemma(doc) -> List[str]:
@@ -226,9 +226,9 @@ class Vectorizer:
         self.tfidf = TfidfVectorizer(
             max_features=5000,
             min_df=10,
-            tokenizer=lambda x: x.split(),  # já está tokenizado
+            tokenizer=lambda x: x.split(), 
             preprocessor=None,
-            token_pattern=None  # Ignora o padrão padrão
+            token_pattern=None  
         )
         self.tfidf.fit(docs)
         return self.tfidf
